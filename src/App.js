@@ -8,12 +8,26 @@ class App extends React.Component {
     super();
     this.state = {
       todos: todosData
-    }
+    };
+    this.handleChange = this.handleChange.bind(this);
+  };
+  handleChange(id) {
+    this.setState(prevState => {
+      const updateTodos = prevState.todos.map(todo => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      });
+      return {
+        todos: updateTodos
+      };
+    })
   };
   render() {
     const todosList = todosData.map(todo => {
       return (
-        <TodoItem key={todo.id} todo={todo}/>
+        <TodoItem key={todo.id} todo={todo} handleChange={this.handleChange}/>
       );
     });
     return (
